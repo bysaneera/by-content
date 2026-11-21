@@ -317,4 +317,4 @@ Every run look for fresh (1–3 days) loud news that brands can play on while me
 6. **Every link in `examples` must open exactly the video or post its label describes.** Before saving open it in the browser and make sure the technique is on the page (not a "page unavailable" error and not someone else's profile). Don't use links from web search without checking; if the browser is unavailable — fewer examples and `verified: false`. An account you suggest for `sources` — open it first: it exists and posted in the last 30 days.
 
 ---
-Author: Sanira Baitasova. Part of the by skills collection.
+Author: Sanira Baitassova. Part of the by skills collection.

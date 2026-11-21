@@ -70,4 +70,4 @@ Offer a daily morning trend digest. If yes: ask the time (default 09:00 in their
 - Don't store anything personal from Saved/reposts that isn't about content work.
 
 ---
-Author: Sanira Baitasova. Part of the by skills collection.
+Author: Sanira Baitassova. Part of the by skills collection.

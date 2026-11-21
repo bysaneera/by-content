@@ -160,4 +160,4 @@ If the user asks for text only — output the cards in chat with the same fields
 - Suggest one next step: move the approved posts into a content plan (a connected workspace tool if available, otherwise a table) with columns # | date | pillar | type | format | placement | SKU | topic | headline | trend | shoot day — and start writing the texts.
 
 ---
-Author: Sanira Baitasova. Part of the by skills collection.
+Author: Sanira Baitassova. Part of the by skills collection.
