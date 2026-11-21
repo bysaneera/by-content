@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Trend Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{--bg:#FAFAFA;--fg:#161616;--grey:#7A7A7A;--muted:#6B6B6B;--text2:#555555;--line:#DDDDDD;--card:#F0F0F0;--plate:#EDEDED;--stroke:#CCCCCC;color-scheme:light}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,sans-serif;letter-spacing:-0.02em;-webkit-font-smoothing:antialiased}
+body{padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0)}
+a{color:inherit}
+button,select,input,textarea{font:inherit;letter-spacing:inherit;color:inherit}
+button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:48px max(20px,env(safe-area-inset-left)) 80px max(20px,env(safe-area-inset-right))}
+h1{font-weight:500;font-size:clamp(34px,5vw,68px);letter-spacing:-0.045em;line-height:1;margin:0;max-width:18ch}
+h1 span{color:var(--grey);font-weight:400}
+.madeby{display:inline-block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--grey);margin:0 0 18px;text-decoration:none}
+.lede{font-size:17px;line-height:1.5;color:var(--text2);max-width:620px;margin:20px 0 0}
+.counts{display:flex;flex-wrap:wrap;margin-top:36px;border-top:1px solid var(--line)}
+.counts div{flex:1 1 140px;padding:14px 16px 0 0}
+.counts b{display:block;font-weight:400;font-size:32px;letter-spacing:-0.04em;font-variant-numeric:tabular-nums}
+.label{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:44px 0 0}
+.tabs button{border:1px solid var(--stroke);background:transparent;border-radius:999px;padding:9px 16px;font-size:15px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tabs .n{font-size:12px;color:var(--grey)}
+.tabs button[aria-selected="true"] .n{color:#BDBDBD}
+.tabhint{font-size:15px;color:var(--text2);margin:14px 0 0;max-width:640px;line-height:1.5}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:22px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.filters select,.filters input[type=search]{background:transparent;border:1px solid var(--stroke);border-radius:999px;padding:8px 14px;font-size:14px}
+.filters input[type=search]{flex:1 1 200px;min-width:0}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--text2);border:1px solid var(--stroke);border-radius:999px;padding:8px 14px;cursor:pointer}
+.toggle input{margin:0;accent-color:#161616}
+.group{margin-top:36px}
+.group h2{font-weight:500;font-size:clamp(24px,3vw,36px);letter-spacing:-0.04em;margin:0 0 4px}
+.group h2 span{color:var(--grey);font-weight:400}
+.group .ghint{font-size:14px;color:var(--muted);margin:0 0 16px}
+.grid{align-items:start;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:12px}
+.card{background:var(--card);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;min-width:0;cursor:pointer;text-align:left;border:0;width:100%}
+.card:hover{background:#E8E8E8}
+.card .thumb{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;background:#E2E2E2;display:block}
+.card .hk{font-size:13px;color:#555;line-height:1.4;margin-top:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.lbl{font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:#6B6B6B;margin-top:18px}
+.inq{display:flex;gap:8px;margin:28px 0 0;max-width:640px}.inq input{flex:1;font:inherit;font-size:15px;padding:12px 16px;border:1px solid #CCCCCC;border-radius:999px;background:transparent}.inq button{font:inherit;font-size:15px;padding:12px 20px;border:0;border-radius:999px;background:#161616;color:#FAFAFA;cursor:pointer}
+.qlist{display:flex;flex-direction:column;border-top:1px solid var(--line)}.qlist a{padding:12px 0;border-bottom:1px solid var(--line);color:var(--fg);text-decoration:none;font-size:15px;word-break:break-all}.qlist a::after{content:" ↗";color:#7A7A7A}
+.dthumb{display:block;width:180px;aspect-ratio:5/8;object-fit:cover;border-radius:12px;margin:18px 0 0;background:#E2E2E2}
+.due{color:var(--fg)}
+.meta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+.card h3{font-weight:600;font-size:18px;line-height:1.25;letter-spacing:-0.03em;margin:0}
+.card p{margin:0;font-size:14px;line-height:1.45;color:var(--text2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .foot{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--grey);margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.niches{font-size:13px;color:var(--fg)}
+.empty{color:var(--muted);font-size:15px;padding:24px 0}
+.scrim{position:fixed;inset:0;background:rgba(22,22,22,.25);opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(560px,100%);background:var(--bg);transform:translateX(100%);transition:transform .25s ease;overflow-y:auto;padding:28px max(24px,env(safe-area-inset-right)) 48px 28px;z-index:2}
+.drawer.on{transform:none}
+.close{position:sticky;top:0;float:right;border:1px solid var(--stroke);background:var(--bg);border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px}
+.drawer h2{font-weight:500;font-size:clamp(26px,4vw,36px);letter-spacing:-0.04em;line-height:1.05;margin:18px 0 12px;clear:both}
+.drawer .sum{font-size:17px;line-height:1.5;color:var(--text2);margin:0 0 8px}
+.row{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid var(--line);font-size:15px}
+.row .k{color:var(--grey)}
+.row .v{font-weight:600;text-align:right}
+.sec{margin-top:26px}
+.sec .label{display:block;margin-bottom:10px}
+.how{list-style:none;margin:0;padding:0}
+.how li{display:grid;grid-template-columns:28px 1fr;gap:6px;padding:10px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.45}
+.how li i{font-style:normal;font-size:13px;color:var(--grey)}
+.how b{font-weight:600}
+.signal{font-size:15px;line-height:1.5;color:var(--text2);margin:0}
+.links{display:flex;flex-direction:column}
+.links a{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid var(--line);text-decoration:none;font-size:15px}
+.links a:hover{color:var(--grey)}
+.status{display:flex;gap:6px;flex-wrap:wrap}
+.status button{border:1px solid var(--stroke);background:transparent;border-radius:999px;padding:7px 12px;font-size:13px;cursor:pointer}
+.status button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+details.add{margin-top:56px;background:var(--plate);border-radius:24px;padding:24px 28px}
+details.add summary{cursor:pointer;font-size:20px;letter-spacing:-0.03em;list-style:none}
+details.add summary::-webkit-details-marker{display:none}
+details.add summary span{color:var(--grey)}
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
+.form label{display:flex;flex-direction:column;gap:6px;font-size:12px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);min-width:0}
+.form input,.form select,.form textarea{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:15px;text-transform:none;letter-spacing:-0.02em;color:var(--fg)}
+.form .full{grid-column:1/-1}
+.btn{justify-self:start;background:var(--fg);color:var(--bg);border:0;border-radius:999px;padding:12px 20px;font-size:15px;cursor:pointer}
+.note{font-size:14px;color:var(--muted)}
+@media (max-width:600px){.form{grid-template-columns:1fr}.wrap{padding-top:28px}.tabs button{padding:8px 13px;font-size:14px}}
+@media (prefers-reduced-motion:reduce){.drawer,.scrim{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="madeby">Made by by.agency</p>
+    <h1>Trend Library. <span>What to shoot now and how to adapt it to a niche.</span></h1>
+    <p class="lede">News — what happened and until when to shoot it. Trends — techniques and formats to adapt to a client's niche. Finds worth adapting, seasons, brand pages and words everyone starts saying. Tap a card to see the frame, videos and ideas per niche.</p>
+    <div class="counts" aria-live="polite">
+      <div><b id="cTrend">0</b><span class="label">trends</span></div>
+      <div><b id="cGrow">0</b><span class="label">rising now</span></div>
+      <div><b id="cFind">0</b><span class="label">news</span></div>
+      <div><b id="cPage">0</b><span class="label">brand pages</span></div>
+      <div><b id="cLocal">0</b><span class="label">local and regional</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Sections" id="tabs"></nav>
+  <p class="tabhint" id="tabhint"></p>
+
+  <div class="filters" id="filters" role="group" aria-label="Filters">
+    <select id="fNiche" aria-label="Niche"><option value="">All niches</option></select>
+    <select id="fOrigin" aria-label="Origin"><option value="">Any origin</option><option>Local</option><option>Regional</option><option>International</option></select>
+    <select id="fType" aria-label="Type"><option value="">Any type</option><option>Sound</option><option>Format</option><option>Visual</option><option>Topic</option><option>News hook</option><option>Discussion / meme</option><option>Event</option></select>
+    <label class="toggle"><input type="checkbox" id="fMood"> For moody posts</label>
+    <input type="search" id="fQuery" placeholder="Search by title, niche, brand" aria-label="Search">
+  </div>
+
+  <p class="note" id="state" hidden></p>
+  <main id="out"></main>
+
+  <details class="add" id="addBox">
+    <summary>Add manually. <span>A trend, brand page or word.</span></summary>
+    <form class="form" id="addForm">
+      <label>What
+        <select id="aKind"><option value="Trend">Trend</option><option value="Find">Find</option><option value="Page">Brand page</option><option value="phrase">Word for the slang dictionary</option></select>
+      </label>
+      <label>Origin
+        <select id="aOrigin"><option>Local</option><option>Regional</option><option>International</option></select>
+      </label>
+      <label class="full">Title or word
+        <input id="aTitle" required maxlength="140" placeholder="e.g. the “OK” sound and gesture">
+      </label>
+      <label class="full">What it is
+        <textarea id="aSummary" rows="2" maxlength="600"></textarea>
+      </label>
+      <label class="full">How to use
+        <textarea id="aHow" rows="2" maxlength="600" placeholder="Beauty: … Auto: … Fintech: …"></textarea>
+      </label>
+      <label>Niches
+        <input id="aNiche" maxlength="120" placeholder="beauty, auto, fintech">
+      </label>
+      <label>Example link
+        <input id="aLink" type="url" placeholder="https://">
+      </label>
+      <button class="btn" type="submit">Save →</button>
+    </form>
+  </details>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle"></aside>
+
+<script>
+(function(){
+  const $=id=>document.getElementById(id);
+  const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;};
+  const str=v=>typeof v==="string"?v:"";
+  const safeUrl=u=>{try{const x=new URL(String(u));return /^https?:$/.test(x.protocol)?x.href:null}catch(e){return null}};
+  const parseD=s=>{const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(String(s));return m?new Date(+m[1],+m[2]-1,+m[3]):new Date(s)};
+  const fmtDate=s=>{const d=parseD(s);return isNaN(d)?"":d.toLocaleDateString("en-GB",{day:"numeric",month:"short"})};
+  let NICHES=["beauty","fashion","auto","fintech","HoReCa","retail","FMCG","real estate","family brands","jewellery","sport","services","tech","small business"];
+  function fillNiches(){const s=$("fNiche");s.replaceChildren(el("option",null,"All niches"));s.firstChild.value="";NICHES.forEach(n=>{const o=el("option",null,n.charAt(0).toUpperCase()+n.slice(1));o.value=n;s.appendChild(o)})}
+  fillNiches();
+  const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const STAGES=[["rising","Rising.","Take it now — catch the wave."],["peak","At peak.","Still works, but hurry."],["declining","Declining.","Only if the technique adapts well."]];
+  const TABS=[
+    ["new","New","Everything added on the latest day: the morning digest and videos you send during the day. Paste a link right here — it will be analysed and turned into a card."],
+    ["news","News","News hooks and events: what happened, until when to shoot, and how to play on it safely. Nearest deadline first."],
+    ["trend","Trends","Techniques and formats to adapt to a client's niche. Grouped by stage: take now, at peak, fading."],
+    ["season","Seasons","Themes that return every year. Upcoming months first."],
+    ["find","Finds","Well-made, moody or funny videos worth adapting — not trends (yet). Become trends when 3+ creators pick them up."],
+    ["page","Brand pages","Accounts with beautiful presentation: grid, light, colour, product. Visual references."],
+    ["phrase","Slang","Words and phrases everyone is starting to say. For captions and scripts."],
+    ["source","Sources","Accounts checked first."]
+  ];
+  let loaded=false,draft="",tab="new",rows=[],phrases=[],sources=[],inbox=[],db=null,openId=null;
+  const kind=d=>(d.type==="Event"||d.type==="News hook")?"news":d.type==="Season"?"season":d.tier==="Page"?"page":d.tier==="Find"?"find":"trend";
+
+  TABS.forEach(([k,l])=>{const b=el("button");b.type="button";b.setAttribute("role","tab");b.dataset.k=k;b.append(el("span",null,l),el("span","n","0"));b.addEventListener("click",()=>{tab=k;render()});$("tabs").appendChild(b)});
+  ["fNiche","fOrigin","fType","fMood","fQuery"].forEach(id=>$(id).addEventListener("input",render));
+
+  function matches(d){
+    const ni=$("fNiche").value.toLowerCase(),og=$("fOrigin").value,ty=$("fType").value,md=$("fMood").checked,q=$("fQuery").value.trim().toLowerCase();
+    if(ni){const n=(str(d.niche)+" "+str(d.howToUse)).toLowerCase();if(!n.includes(ni)&&!/all niches/.test(n))return false;}
+    if(og&&d.origin!==og)return false;
+    if(ty&&tab==="trend"&&d.type!==ty)return false;
+    if(md&&d.moodFit!==true)return false;
+    if(q){const h=[d.title,d.summary,d.niche,d.client,d.howToUse,d.source,d.phrase,d.meaning].map(str).join(" ").toLowerCase();if(!h.includes(q))return false;}
+    return true;
+  }
+  function card(id,d,kindKey){
+    const c=el("button","card");c.type="button";
+    if(str(d.thumb)&&/^[A-Za-z0-9_-]{8,64}$/.test(d.thumb)){const im=el("img","thumb");im.src="/_blob/"+d.thumb;im.alt="";im.loading="lazy";c.appendChild(im)}
+    const m=el("div","meta");
+    const bits=kindKey==="season"?[str(d.origin)]:[str(d.type),str(d.origin),str(d.platform)];
+    bits.filter(Boolean).forEach(x=>m.appendChild(el("span",null,x)));
+    if(d.moodFit===true&&kindKey!=="page"&&kindKey!=="find")m.appendChild(el("span",null,"moody"));
+    c.appendChild(m);
+    c.appendChild(el("h3",null,str(d.title)||"Untitled"));
+    if(str(d.summary))c.appendChild(el("p",null,d.summary));
+    if(str(d.hook)){const hk=el("p","hk");hk.textContent="Hook: "+str(d.hook);c.appendChild(hk)}
+    const f=el("div","foot");
+    f.appendChild(el("span","niches",str(d.niche)));
+    f.appendChild(kind(d)==="news"&&str(d.expiresHint)?el("span","due","until "+fmtDate(d.expiresHint)):el("span",null,kindKey==="season"?"":fmtDate(d.foundAt)));
+    c.appendChild(f);
+    c.addEventListener("click",()=>openDrawer(id));
+    return c;
+  }
+  function group(title,grey,hint,items,kindKey){
+    const g=el("section","group");const h=el("h2",null,title+" ");h.appendChild(el("span",null,grey||""));g.appendChild(h);
+    if(hint)g.appendChild(el("p","ghint",hint));
+    const grid=el("div","grid");items.forEach(([id,d])=>grid.appendChild(card(id,d,kindKey)));g.appendChild(grid);return g;
+  }
+  const localDay=x=>{const t=parseD(str(x));if(isNaN(t))return"";const z=t.getTimezoneOffset()*60e3;return new Date(t-z).toISOString().slice(0,10)};
+  const today=()=>localDay(new Date().toISOString());
+  function newList(all){const xs=all.filter(([,d])=>kind(d)!=="season"&&localDay(d.foundAt));if(!xs.length)return[];const last=xs.map(([,d])=>localDay(d.foundAt)).sort().pop();return xs.filter(([,d])=>localDay(d.foundAt)===last).sort((a,b)=>str(b[1].foundAt).localeCompare(str(a[1].foundAt)))}
+  let inqForm=null;
+  function makeInq(){
+    const form=el("form","inq");const inp=el("input");inp.type="url";inp.placeholder="Paste a video link (Instagram, TikTok, YouTube, X…)";inp.required=true;inp.addEventListener("input",()=>{draft=inp.value;inp.setCustomValidity("")});const bt=el("button",null,"Add to queue →");bt.type="submit";form.append(inp,bt);
+    form.addEventListener("submit",async e=>{e.preventDefault();const u=inp.value.trim();const su=safeUrl(u);if(!su){inp.setCustomValidity("Needs a valid http(s) link");inp.reportValidity();return}inp.setCustomValidity("");bt.disabled=true;try{const x=new URL(su);[...x.searchParams.keys()].forEach(k=>{if(/^(utm_|igsh|igshid|si$|fbclid|_t$|_r$|is_from_webapp|sender_device)/.test(k))x.searchParams.delete(k)});await db.collection("inbox").add({url:x.href,status:"waiting",source:"User",addedAt:new Date().toISOString()});inp.value="";draft=""}catch(err){showState("Could not add. Please try again.")}bt.disabled=false});
+    return form;
+  }
+  function render(){
+    const all=rows.map(r=>[r.id,r.d]);
+    const by=k=>all.filter(([,d])=>kind(d)===k);
+    $("cTrend").textContent=by("trend").length;
+    $("cGrow").textContent=by("trend").filter(([,d])=>d.stage==="rising").length;
+    $("cFind").textContent=by("news").length;
+    $("cPage").textContent=by("page").length;
+    $("cLocal").textContent=all.filter(([,d])=>d.type!=="Season"&&(d.origin==="Regional"||d.origin==="Local")).length;
+    const counts={new:newList(all).length+inbox.filter(r=>r.d.status==="waiting").length,news:by("news").length,trend:by("trend").length,find:by("find").length,page:by("page").length,season:by("season").length,phrase:phrases.length,source:sources.length};
+    $("tabs").querySelectorAll("button").forEach(b=>{b.setAttribute("aria-selected",String(b.dataset.k===tab));b.querySelector(".n").textContent=counts[b.dataset.k]});
+    $("tabhint").textContent=TABS.find(t=>t[0]===tab)[2];
+    $("filters").hidden=(tab==="source");
+    $("fType").hidden=tab!=="trend";
+    const out=$("out");[...out.children].forEach(c=>{if(!(tab==="new"&&c===inqForm))c.remove()});
+    if(tab==="new"){
+      if(!inqForm)inqForm=makeInq();
+
+      if(!out.contains(inqForm))out.prepend(inqForm);
+      const q=inbox.filter(r=>r.d.status==="waiting").sort((a,b)=>str(b.d.addedAt).localeCompare(str(a.d.addedAt)));
+      if(q.length){const g=el("section","group");const h=el("h2",null,"In queue. ");h.appendChild(el("span",null,q.length+""));g.append(h,el("p","ghint","Sent videos. In the morning or on request each becomes a separate card with a frame and hook."));const ul=el("div","qlist");q.forEach(r=>{const u=safeUrl(r.d.url);const a=el("a",null,str(r.d.url).replace(/^https?:\/\/(www\.)?/,""));if(u){a.href=u;a.target="_blank";a.rel="noopener"}ul.appendChild(a)});g.appendChild(ul);out.appendChild(g)}
+      const list=newList(all).filter(([,d])=>matches(d));
+      if(list.length){const day=localDay(list[0][1].foundAt);out.appendChild(group(day===today()?"Today.":"Latest update.",fmtDate(day),null,list,"trend"))}
+      else if(!q.length)out.appendChild(el("p","empty",loaded?"Nothing yet today. The morning digest will appear here.":"Loading the library…"));
+    }else if(tab==="trend"){
+      const list=by("trend").filter(([,d])=>matches(d));
+      if(!list.length){out.appendChild(el("p","empty","Nothing matches these filters."));return;}
+      STAGES.forEach(([s,t,h])=>{const it=list.filter(([,d])=>(d.stage||"rising")===s);if(it.length)out.appendChild(group(t,it.length+"",h,it,"trend"))});
+    }else if(tab==="news"){
+      const list=by("news").filter(([,d])=>matches(d)).sort((a,b)=>(str(a[1].expiresHint)||"9999").localeCompare(str(b[1].expiresHint)||"9999"));
+      if(!list.length){out.appendChild(el("p","empty","No fresh news yet."));return;}
+      const t=today();
+      const live=list.filter(([,d])=>!str(d.expiresHint)||d.expiresHint>=t),old=list.filter(([,d])=>str(d.expiresHint)&&d.expiresHint<t);
+      if(live.length)out.appendChild(group("Current.",live.length+"","Shoot before the deadline.",live,"news"));
+      if(old.length)out.appendChild(group("Past.",old.length+"","For the archive and next year.",old,"news"));
+    }else if(tab==="page"||tab==="find"){
+      const list=by(tab).filter(([,d])=>matches(d));
+      if(!list.length){out.appendChild(el("p","empty",tab==="find"?"No finds yet.":"No brand pages yet."));return;}
+      const g=el("div","grid");g.style.marginTop="28px";list.forEach(([id,d])=>g.appendChild(card(id,d,tab)));out.appendChild(g);
+    }else if(tab==="season"){
+      const now=new Date().getMonth()+1;const list=by("season").filter(([,d])=>matches(d));
+      const order=[...Array(12)].map((_,i)=>((now-1+i)%12)+1);
+      order.forEach((mo,i)=>{const it=list.filter(([,d])=>Array.isArray(d.months)&&d.months.includes(mo));if(it.length)out.appendChild(group(MONTHS[mo-1]+".",i===0?"Now":i===1?"Next month":"",null,it,"season"))});
+      const floating=list.filter(([,d])=>!Array.isArray(d.months)||!d.months.length);
+      if(floating.length)out.appendChild(group("Floating dates.","Check every year",null,floating,"season"));
+      if(!list.length)out.appendChild(el("p","empty","No seasonal themes yet."));
+    }else if(tab==="phrase"){
+      const list=phrases.filter(r=>matches(r.d));
+      if(!list.length){out.appendChild(el("p","empty","Empty for now. A word lands here when at least three creators pick it up."));return;}
+      const g=el("div","grid");g.style.marginTop="28px";
+      list.forEach(({d})=>{const c=el("div","card");c.style.cursor="default";const m=el("div","meta");[str(d.origin),str(d.stage)].filter(Boolean).forEach(x=>m.appendChild(el("span",null,x)));c.append(m,el("h3",null,"“"+str(d.phrase)+"”"));if(str(d.meaning))c.appendChild(el("p",null,d.meaning));if(str(d.howToUse))c.appendChild(el("p",null,d.howToUse));g.appendChild(c)});
+      out.appendChild(g);
+    }else{
+      const g=el("div","links");g.style.marginTop="24px";
+      if(!sources.length)out.appendChild(el("p","empty","No sources yet."));
+      sources.forEach(({d})=>{const u=safeUrl(d.url);const a=el("a");if(u){a.href=u;a.target="_blank";a.rel="noopener"}a.append(el("span",null,str(d.handle)),el("span","label",[str(d.kind),str(d.region)].filter(Boolean).join(" · ")+(u?" ↗":"")));g.appendChild(a)});
+      out.appendChild(g);
+    }
+  }
+  function splitHow(t){
+    return str(t).split(/(?<=[.!?。！？])\s*(?=\p{L}[^:：.。]{0,40}[:：])/u).map(s=>s.trim()).filter(Boolean);
+  }
+  function openDrawer(id,refresh){
+    openId=id;const r=rows.find(x=>x.id===id);if(!r)return;const d=r.d;const k=kind(d);
+    const dr=$("drawer");dr.replaceChildren();
+    const cl=el("button","close","Close ✕");cl.type="button";cl.addEventListener("click",closeDrawer);dr.appendChild(cl);
+    const m=el("div","meta");m.style.marginTop="8px";[({news:"News",trend:"Trend",find:"Find",page:"Brand page",season:"Season"})[k],str(d.type),str(d.origin)].filter(Boolean).forEach(x=>m.appendChild(el("span",null,x)));dr.appendChild(m);
+    if(str(d.thumb)&&/^[A-Za-z0-9_-]{8,64}$/.test(d.thumb)){const im=el("img","dthumb");im.src="/_blob/"+d.thumb;im.alt="";dr.appendChild(im)}
+    const h=el("h2",null,str(d.title));h.id="dTitle";dr.appendChild(h);
+    if(str(d.summary))dr.appendChild(el("p","sum",d.summary));
+    if(str(d.hook)){dr.appendChild(el("div","lbl","Hook · first second"));dr.appendChild(el("p","sum",d.hook))}
+    const facts=[["Shoot until",d.expiresHint?fmtDate(d.expiresHint):""],["Stage",d.stage],["Lifespan",d.lifespan],["Picked up",d.evidence],["Platform",d.platform],["Niches",d.niche],["Author",d.author],["When",Array.isArray(d.months)&&d.months.length?d.months.map(n=>MONTHS[n-1]).join(", "):""]].filter(([,v])=>v!=null&&v!=="");
+    if(facts.length){const s=el("div","sec");facts.forEach(([kk,v])=>{const row=el("div","row");row.append(el("span","k",kk),el("span","v",String(v)));s.appendChild(row)});dr.appendChild(s);}
+    const how=splitHow(d.howToUse);
+    if(how.length){const s=el("div","sec");s.appendChild(el("span","label","How to use"));const ul=el("ul","how");how.forEach((line,i)=>{const li=el("li");li.appendChild(el("i",null,"["+(i+1)+"]"));const p=el("span");const m2=line.match(/^([^:：]{1,40})[:：]\s*(.*)$/u);if(m2){p.appendChild(el("b",null,m2[1]+". "));p.appendChild(document.createTextNode(m2[2]))}else p.textContent=line;li.appendChild(p);ul.appendChild(li)});s.appendChild(ul);dr.appendChild(s);}
+    if(str(d.signal)){const s=el("div","sec");s.append(el("span","label","Why it's a trend"),el("p","signal",d.signal));dr.appendChild(s);}
+    const ex=(Array.isArray(d.examples)?d.examples:[]).map(e=>({u:safeUrl(e&&e.url),l:str(e&&e.label)})).filter(e=>e.u);
+    const ht=safeUrl(d.howTo);
+    if(ex.length||ht){const s=el("div","sec");s.appendChild(el("span","label","Examples"));const L=el("div","links");ex.forEach(e=>{const a=el("a");a.href=e.u;a.target="_blank";a.rel="noopener";a.append(el("span",null,e.l||"Example"),el("span",null,"↗"));L.appendChild(a)});if(ht){const a=el("a");a.href=ht;a.target="_blank";a.rel="noopener";a.append(el("b",null,"How to make it"),el("span",null,"↗"));L.appendChild(a)}s.appendChild(L);dr.appendChild(s);}
+    else if(str(d.howTo)){const s=el("div","sec");s.append(el("span","label","How to make it"),el("p","signal",d.howTo));dr.appendChild(s);}
+    if(k!=="season"){const s=el("div","sec");s.appendChild(el("span","label","Status"));const st=el("div","status");["New","In progress","Used","Outdated"].forEach(v=>{const b=el("button",null,v);b.type="button";b.setAttribute("aria-pressed",String(d.status===v));b.addEventListener("click",async()=>{if(!db)return;try{await db.doc("trends/"+id).update({status:v,updatedAt:new Date().toISOString()})}catch(e){showState("Could not save the status.")}});st.appendChild(b)});s.appendChild(st);const used=(Array.isArray(d.usedFor)?d.usedFor:[]).filter(Boolean);if(used.length)s.appendChild(el("p","note","Already used for: "+used.join(", ")));dr.appendChild(s);}
+    const meta=el("p","note",[str(d.source),fmtDate(d.foundAt)].filter(Boolean).join(" · "));meta.style.marginTop="28px";dr.appendChild(meta);
+    dr.classList.add("on");$("scrim").classList.add("on");if(!refresh)cl.focus();
+  }
+  function closeDrawer(){openId=null;$("drawer").classList.remove("on");$("scrim").classList.remove("on")}
+  $("scrim").addEventListener("click",closeDrawer);
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeDrawer()});
+  function showState(m){const s=$("state");s.textContent=m;s.hidden=!m}
+
+  $("addForm").addEventListener("submit",async e=>{
+    e.preventDefault();if(!db){showState("Saving is unavailable right now.");return}
+    const k=$("aKind").value,title=$("aTitle").value.trim();if(!title)return;
+    const link=safeUrl($("aLink").value);const ex=link?[{url:link,label:"Example"}]:[];
+    try{
+      if(k==="phrase")await db.collection("phrases").add({phrase:title,meaning:$("aSummary").value.trim(),howToUse:$("aHow").value.trim(),origin:$("aOrigin").value,examples:ex,source:"Manual",status:"New",foundAt:new Date().toISOString()});
+      else await db.collection("trends").add({tier:k,title,summary:$("aSummary").value.trim(),howToUse:$("aHow").value.trim(),niche:$("aNiche").value.trim(),origin:$("aOrigin").value,type:k==="Page"?"Visual":"Format",platform:(/tiktok\./.test(link||"")?"TikTok":/youtu/.test(link||"")?"YouTube":/instagram\./.test(link||"")?"Instagram":"Other"),...(k==="Trend"?{stage:"rising"}:{}),moodFit:k==="Page",examples:ex,usedFor:[],source:"Manual",status:"New",foundAt:new Date().toISOString()});
+      $("addForm").reset();$("addBox").open=false;showState("Saved.");
+    }catch(err){showState("Could not save. Please try again.")}
+  });
+
+  render();
+  (async()=>{
+    try{db=window.claude&&window.claude.use?await window.claude.use("db"):null}catch(e){db=null}
+    if(!db){showState("The library only works inside Claude: storage is unavailable here.");$("addBox").hidden=true;return}
+    db.collection("trends").orderBy("foundAt","desc").limit(1000).onSnapshot(s=>{rows=s.docs.map(d=>({id:d.id,d:d.data()||{}}));loaded=true;render();if(openId)openDrawer(openId,true)},()=>showState("Connection to the library was lost. It will reconnect automatically; if not, close and reopen the library."));
+    db.collection("phrases").limit(500).onSnapshot(s=>{phrases=s.docs.map(d=>({id:d.id,d:d.data()||{}}));render()},()=>{});
+    db.collection("inbox").limit(300).onSnapshot(s=>{inbox=s.docs.map(d=>({id:d.id,d:d.data()||{}}));render()},()=>{});
+    db.collection("sources").limit(200).onSnapshot(s=>{sources=s.docs.map(d=>({id:d.id,d:d.data()||{}}));render()},()=>{});
+    try{db.doc("settings/config").onSnapshot(s=>{const c=s&&s.data?s.data():null;if(c&&Array.isArray(c.niches)&&c.niches.length){NICHES=c.niches.map(String);fillNiches();render()}},()=>{})}catch(e){}
+  })();
+})();
+</script>
+</body>
+</html>

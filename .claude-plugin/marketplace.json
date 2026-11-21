@@ -1,0 +1,31 @@
+{
+  "name": "by-content",
+  "owner": {
+    "name": "Sanira Baitasova"
+  },
+  "metadata": {
+    "description": "Social media content pack: trend research with a self-hosted Trend Library, content ideas and reference boards, guided setup.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "by-content",
+      "source": "./plugins/by-content",
+      "description": "Social media content pack: trend research with a self-hosted Trend Library, content ideas and reference boards, guided setup.",
+      "category": "marketing",
+      "keywords": [
+        "smm",
+        "trends",
+        "content-plan",
+        "references",
+        "pinterest",
+        "instagram",
+        "tiktok"
+      ],
+      "author": {
+        "name": "Sanira Baitasova"
+      },
+      "license": "CC-BY-4.0"
+    }
+  ]
+}

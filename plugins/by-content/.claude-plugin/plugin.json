@@ -1,0 +1,17 @@
+{
+  "name": "by-content",
+  "version": "1.0.0",
+  "description": "Content pack for social media: trend research with a self-hosted Trend Library, content ideas and reference boards, guided setup.",
+  "keywords": [
+    "smm",
+    "trends",
+    "content-plan",
+    "references"
+  ],
+  "author": {
+    "name": "Sanira Baitasova"
+  },
+  "license": "CC-BY-4.0",
+  "repository": "https://github.com/bysaneera/by-content",
+  "homepage": "https://github.com/bysaneera/by-content"
+}
