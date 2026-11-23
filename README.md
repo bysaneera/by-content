@@ -17,7 +17,7 @@ Looking for layout, presets and motion? See **[by-design](https://github.com/bys
 ## Install
 
 ### Option 1 — by link (recommended)
-**Claude app (desktop / web):** Customize → **Plugins** → **Add marketplace** → paste
+**Claude app (desktop / web):** **Plugins** → **Add custom plugin** (in some versions: Customize → Plugins → Add marketplace) → paste
 ```
 https://github.com/bysaneera/by-content
 ```
@@ -32,7 +32,7 @@ then install **by-content**. Plugins work where Claude runs tasks with tools (th
 **Organisations:** organisation-wide sync from GitHub works only with private or internal repositories connected through the Claude GitHub App — an admin can fork this repo privately and sync that, or upload the file below.
 
 ### Option 2 — upload the file
-Download [`dist/by-content.zip`](dist/by-content.zip) (or the identical [`dist/by-content.plugin`](dist/by-content.plugin)) and upload it in Claude: Customize → Plugins → upload a plugin file.
+Download [`dist/by-content.zip`](dist/by-content.zip) (or the identical [`dist/by-content.plugin`](dist/by-content.plugin)) and upload it in Claude: Plugins → Add custom plugin → upload the file.
 
 ---
 
