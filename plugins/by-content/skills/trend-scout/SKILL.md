@@ -84,79 +84,10 @@ Don't take:
 **Working with what the user sends.** Videos sent in a batch are not merged: each becomes a separate card, even if similar (no "umbrella" formats). Sent 11 — add all 11. One exception: a video matches an existing card by the duplicate keys — then it goes into that card's `examples`. Each card: a frame from the video, the original link, the author, `hook`, ideas for 3–4 niches. Something sent without a findable original — `tier` "Find", note "original not found" in `signal`, the user's link in `examples`, `author` — the account where it was found, marked "re-upload". New items sent by the user take priority over searching.
 
 ## Trend card fields
-- `tier` — Trend | Find | Page (a brand account with beautiful presentation, see Curaeted);
-- `title` — short name;
-- `summary` — what it is, 1–2 sentences;
-- `signal` — why it's a trend: figures or observations from the source. Every figure has a source and date ("TikTok sound page, 20 Nov"); service estimates are marked "vidIQ estimate". Views of one video don't prove a trend;
-- `evidence` — one line with the main proof and date: "sound: 12,400 videos (TikTok page, 20 Nov)" or "6 creators in 7 days". Prepend new values, keep old ones — shows the dynamics;
-- `author` — @handle of the original video's author (first in `examples`). Required for anything with a video or post: no author — don't save. For "Page" — the brand's @handle. Seasons, news hooks and events without videos have no author;
-- `soundUrl` — for sounds and videos on a sound: link to the sound page (tiktok.com/music/…). Used for duplicate checks;
-- `howToUse` — ideas for at least 3 niches as "Beauty: … Auto: … Fintech: …"; rotate niches;
-- `howTo` — link to a "how to make it" breakdown or template (tutorial, CapCut template), if any;
-- `platform` — Instagram | TikTok | YouTube | X | Threads | Douyin | Xiaohongshu | Naver | Other | All;
-- `type` — Format | Visual | Sound | Topic | News hook | Discussion / meme | Season | Event:
-  - "News hook" — unplanned news (outage, release, record, CEO exit), lives 3–5 days;
-  - "Event" — scheduled (award, tour, show, premiere) and moments inside it;
-  - "Discussion / meme" — discussed without a news trigger;
-  - "Topic" — a long consumer theme lasting months (e.g. JOMO);
-- `origin` — International | Regional | Local (Local = `localMarket`, Regional = `region` from settings);
-- `stage` — rising | peak | declining. Required only for `tier` "Trend" (except "Season"); not set for "Find" and "Page";
-- `lifespan` — rough life: sound ~1–2 weeks, format ~a month, discussion — a few days;
-- `months` — only for "Season": active months (numbers 1–12);
-- `moodFit` — true if the technique suits moody/aesthetic posts;
-- `niche` — comma-separated niches from "Who the library is for" (or "all niches"); `client` — the client it was found for, if any;
-- `examples` — 3–6 `{url, label}` objects (a "Find" can have 1), only links to specific videos or posts on Instagram, TikTok, YouTube, Threads or the market's main video platform (X, Douyin, Xiaohongshu, Bilibili, Naver Clip / Naver TV); no Telegram channels, Pinterest, articles or compilations (a breakdown goes only to `howTo`); the original video first. Exception: for "Page" the first link is the brand profile. A news hook without videos may have empty `examples`;
-- `hook` — what happens in the first second and what text is on screen;
-- `thumb` — a frame from the original video (no celebrities or children), uploaded with `upload_asset`; store the **asset id** that `upload_asset` returns (its `opaque_id`, not a URL) — the library page renders it from that id;
-- `source` — joined with ", " from: vidIQ | Apify | Spyglass | News | Instagram | TikTok | YouTube | Threads | Know Your Meme | Creative Center | Curaeted | Pinterest | Google Trends | Telegram | Web round-up | User (saved) | User (repost) | User (Pinterest) | User | Manual (added on the library page);
-- `status` — New | In progress | Used | Outdated. Shared across all clients;
-- `usedFor` — which clients it was already used for;
-- `foundAt` — date and time added (ISO 8601);
-- `checkedAt` — when the stage was last rechecked (ISO 8601);
-- `verified` — false if links weren't checked in the browser (by default not set);
-- `expiresHint` — for news hooks and seasonal formats, the date after which the trend loses meaning, always ISO `YYYY-MM-DD` (the library page compares it as a string). Human-readable dates in `signal`/`evidence` may use the user's locale.
+Every field of a trend card (tier, type, origin, stage, examples, thumb, expiresHint, …) with allowed values: read `references/card-fields.md` before writing any card.
 
-## Seasonal themes (`type` "Season")
-Cultural themes that return every year. They don't expire; each year check for a reason to boost the theme (anniversary, new season, remake) and add to `signal`. Status "Used" is not set for them — the theme is adapted anew each time. Build the starter list on first run for the user's market (holidays, school year, local celebrations) plus global ones. Global pop-culture seasons, for example:
-- **September–October:** "Twilight", "Gilmore Girls", "Practical Magic", autumn aesthetics, back to school, pumpkin spice, Halloween;
-- **November:** Black Friday, Cyber Monday and 11.11, holiday prep, advent calendars;
-- **December:** "Harry Potter", "Home Alone", "Love Actually", "Elf", local holiday classics, year in review, Pantone colour of the year;
-- **January–February:** "new year, new me", Valentine's Day;
-- **spring–summer:** graduation, vacation, summer in the city, "hot girl summer"-type seasonal memes.
-Market calendars (pick the user's market; check floating dates every year):
-- **US:** Super Bowl, Valentine's, St. Patrick's, Easter, Mother's Day, Memorial Day, Pride Month, Father's Day, Fourth of July, back to school (August), Labor Day, Halloween, Thanksgiving, Black Friday / Cyber Monday, Hanukkah, Christmas;
-- **UK:** Valentine's Day, Pancake Day, Mother's Day (March), Easter, bank holidays, Father's Day (June), Halloween, Bonfire Night, Black Friday, Christmas markets, Boxing Day;
-- **Continental Europe:** Carnival / Fasching, Easter, Mother's Day (May in most countries), Midsummer (Nordics), summer and winter sales seasons, St Nicholas (6 December), Christmas markets, Three Kings (6 January, Spain);
-- **Kazakhstan / CIS:** New Year, 14 February, 8 March, Nowruz, 1 September, Independence Day, Mother's Day (date differs by country);
-- **Japan:** Shōgatsu (New Year, the biggest holiday — nengajō cards, osechi, fukubukuro lucky bags), Coming of Age Day, Valentine's Day (women give chocolate), White Day (14 March, return gifts), sakura / hanami season (late March–April, forecast by region), new school & work year (April), Golden Week (late April–early May), rainy season, Tanabata (7 July), summer festivals and fireworks, Obon (mid-August), autumn leaves (kōyō), Halloween, Black Friday, Christmas (a couples' holiday + Christmas cake and fried chicken), year-end parties (bōnenkai);
-- **South Korea:** Seollal (Lunar New Year), Valentine's Day, White Day (14 March), Black Day (14 April), Children's Day (5 May), Parents' Day (8 May), Teachers' Day, cherry blossoms, summer vacation, Chuseok (autumn harvest holiday), Hangul Day (9 October), Suneung exam day (November), Pepero Day (11.11), Christmas (couples), year-end;
-- **China / Greater China:** Spring Festival (Lunar New Year, red envelopes), Lantern Festival, 520 (20 May, "I love you"), 618 shopping festival, Dragon Boat Festival, Qixi (Chinese Valentine's), Mid-Autumn Festival (mooncakes), National Day Golden Week, Double 11 (Singles' Day);
-- **Southeast Asia:** Lunar New Year, Ramadan and Hari Raya / Lebaran, Songkran (Thailand, April), 9.9 / 10.10 / 11.11 / 12.12 mega sales;
-- **cross-market:** Lunar New Year, Ramadan and Eid, Diwali.
-
-**Platforms by market.** Adjust the search route to where trends live: **Japan** — X (Twitter) is central for trends and memes, plus TikTok, Instagram, YouTube Shorts and LINE; check Yahoo! Japan real-time search and X trending. **South Korea** — Instagram, YouTube Shorts, TikTok, Naver (blogs, Naver DataLab instead of Google Trends), KakaoTalk; K-pop comebacks and challenge dances are a major trend source. **China** — Douyin, Xiaohongshu (RED), Weibo hot search, Bilibili (often need the user's own access; skip if unavailable and say so).
-
-## Events and cultural moments (`type` "Event")
-Big events produce two kinds of trends: the event itself (line-up, show, award) and viral moments inside it that viewers re-shoot and retell. Catch both.
-
-**Track constantly:** world tours and concerts of big artists, including concerts in the user's local market; fashion shows and weeks, awards, festivals, sports finals, big premieres and releases; moments from them that viewers repeat.
-
-**News of the day — in every search.** Besides social media, web-search the top news of the last 24 hours that everyone is talking about: space and tech (launches, product presentations), big game, film and album releases, sport and wins of local athletes, records, loud brand launches. Take it if 2+ outlets write about it and TikTok already has videos. `type` "News hook", `stage` "peak", `lifespan` 3–5 days, `expiresHint` required; `howToUse` — how to joke about it in 3+ niches; `examples` — eyewitness footage. No politics, wars, disasters, crime or deaths.
-
-**Annual calendar (check dates by search every year):**
-- January–February: Golden Globes, Grammys, Super Bowl (ads and halftime show), fashion weeks;
-- March: Oscars;
-- April: Coachella;
-- May: Met Gala, Eurovision, Cannes Film Festival;
-- June–July: Wimbledon, big summer festivals;
-- September: fashion weeks, Apple event, Emmys;
-- October: Victoria's Secret show;
-- autumn: Coachella line-up announcement;
-- US-specific: NFL Draft (April), NBA Finals (June), NFL season start (September), World Series (October), Thanksgiving Day Parade (November);
-- December: year-in-review (Spotify Wrapped and similar).
-Add local events for the user's market on first run. 1–2 days before an event and the day after — a separate search: what's discussed, which moments were re-shot, which looks are analysed.
-
-**How to record:** `type` "Event"; `signal` — event date and who covers it; `howToUse` — ideas for at least 3 niches; `stage` and `lifespan` — accounting for the second wave. If the user spotted a moment and there are no confirming videos yet — save with status "New" and a note in `signal`, then find 3+ examples in the browser.
+## Seasonal themes and events
+Seasonal themes (`type` "Season"), holiday calendars by market (US, UK, Europe, Japan, Korea, China, SEA, CIS), events and the annual events calendar: read `references/calendar.md` on first run, in the morning digest and when searching for seasons or events.
 
 ## Who the library is for
 Only trends that can be adapted to brand niches. Default niches: beauty, fashion, auto, fintech, HoReCa, retail, FMCG, real estate, family brands, jewellery, sport, services, tech, small business (override with `niches` in settings). No personal-blog topics and no "AI tool news" unless the user asks. In a client project take niche, tone and taboos from its files.
@@ -169,47 +100,7 @@ Watch with a video-watching skill if available (frames, speech with timestamps, 
 Don't copy song lyrics into cards. Others' videos are not published or stored: a temporary download for analysis is fine, the file is deleted afterwards, the library keeps only the link, cover and author.
 
 ## Where to search
-**Mandatory route — on any "find trends", "any new trends?", "what's trending now" and in the morning run.** Don't cut it down to one platform (TikTok only is a mistake). Go through all steps in this order:
-1. The `inbox` queue and links the user sent.
-2. News of the last 24 hours by web search (space, tech, releases, sport, records, brand launches; world and local market) and this week's events calendar → type "News hook"/"Event" with `expiresHint`.
-3. The user's Instagram Saved and reposts — only if `instagramHandle` is set (item 1 below).
-4. The user's Pinterest ideas board — only if `pinterestIdeasBoard` is set (item 1a).
-5. Curaeted — TRENDS and NEW (item 1b).
-6. Accounts from `sources` (item 2).
-7. Search on both Instagram and TikTok (item 3), including niche queries and local-language songs.
-8. Google Trends for the local market and worldwide (item 4).
-9. TikTok Creative Center and sound pages (item 5).
-10. X/Threads, regional messengers (Telegram via TGStat for CIS; LINE/KakaoTalk open channels where relevant), Know Your Meme (items 6–8).
-11. Paid services (vidIQ, Apify, Spyglass) and web trend round-ups — last, as a supplement (items 9–11).
-Every answer has one line "Checked: … / unavailable: …" — so no source is silently skipped. Which tool to use and when a source counts as unavailable — see "Tool order" above.
-
-1. **The user's Instagram** (browser, logged in): Saved (`https://www.instagram.com/<handle>/saved/`) and the reposts tab. If `instagramTrendsCollection` is set — read it first. Go from new to old and take only things about brands, visuals, formats, editing and sounds; skip anything personal and don't record it anywhere. Repeated by 3+ creators — `tier` "Trend"; otherwise, if well made or moody — "Find" with a note in `signal`. Mark aesthetic items `moodFit`. `source` — "User (saved)" or "User (repost)", the post link first in `examples`. Don't reprocess what's already in the library.
-1a. **The user's Pinterest ideas board** (browser; pin.it short links may not open — use the full URL). Go from new pins to old, don't reprocess. **Everything from this board is `tier` "Find"**, even if several pins are similar. "Trend" — only if the user called it a trend or you found 3+ creators with it outside the board. If a pin leads to an Instagram or TikTok video — open the original and put it first in `examples`. `source` — "User (Pinterest)".
-1b. **Curaeted** — https://www.curaeted.co (browser; may require login). TRENDS (?category=trends) — visual trends with descriptions and brand examples. `tier` "Trend" only if 3+ brands are confirmed by their own posts in the last 30 days (open them); otherwise "Find". NEW and categories — beautiful brand pages: `tier` "Page", `moodFit` true, 0–2 per run: what hooks (grid, light, colour, typography, product presentation) and how to adapt to niches. `title` — "Brand — what hooks"; `examples` — the brand's Instagram (not Curaeted), `source` — "Curaeted". Pages the user sends — the same way (`source` "User"). These are references for own shoots: links, not copies of others' photos.
-2. **Sources** — new posts of accounts in `sources` (editing breakdowns, trend round-ups, aesthetics).
-3. **Instagram and TikTok search** in the browser — the main method. Look at results and select what repeats. Most reliable signals — captions "finally did the trend", "hopping on this trend" and the same on-screen line from different creators.
-   - English: "trending transitions", "trending hooks", "trending reels", "trending audio", "viral edit", "trends this week";
-   - round-ups: "current trends", "trends of [month]", "[month] social media trends", "winter trends", "christmas content ideas" — open carousels and write each trend out separately, then verify each by searching its phrase or sound. The source is the carousel and its author. Such round-ups often give moody and auteur techniques — mark `moodFit`;
-   - in the user's `languages`: the local equivalents of "trending transitions", "trend of the week", "trends of [month]", "challenge", "prank on mom", "parents' reaction", local humour.
-   - **Working cycle:**
-     1. World: fresh weekly trend posts from marketing accounts and "trending audio for business this week" videos from strategists on TikTok. Take the hook or sound from each.
-     2. Region and local market: search TikTok in local languages for "we did the trend too", "did the trend with colleagues", "recreated the trend". The same caption from different offices is a signal.
-     3. For each candidate open the sound page (the /music/ link on the video page): record the video count with a date and look for local and regional businesses (restaurants, airlines, offices). 3+ local/regional businesses — `origin` Local/Regional.
-     4. Verify the text hook with 3+ creators by searching the phrase itself.
-     5. The run result is a mix: world trends + at least 2 local/regional, each sound with a dated video count.
-4. **Google Trends** (local market and worldwide) — rising queries.
-5. **TikTok Creative Center** (https://ads.tiktok.com/creative/creativeCenter/trends/hashtag, browser) — trending hashtags, videos and sounds for 7 days. Switch countries: US, UK and 1–2 more; the user's market first if it's listed. Foreign items there are an early signal: verify by searching local and regional creators; 3+ — `origin` Local/Regional, otherwise "International" with "may arrive" in `signal`.
-   **Sounds, additionally:** trending sounds in Reels (the ↗ arrow next to the sound), Spotify Viral 50 and Shazam charts for the local market — what starts playing before it reaches videos.
-6. **News, X, Threads** — what's discussed right now.
-7. **Regional channels and meme pages** — for CIS markets Telegram via TGStat; elsewhere the market's equivalent (skip if there's none).
-8. **Know Your Meme** — memes and their origins.
-9. **vidIQ** — trending videos and outliers on Instagram, TikTok, YouTube; **Apify** — latest posts and reels of tracked accounts with numbers.
-10. **Spyglass** — campaigns, formats and hooks of category brands.
-11. **Web search** — news hooks and platform trend round-ups.
-
-**"How to make it" breakdowns.** If an editing-breakdown creator shows a technique — find the original video it came from: it goes first in `examples`, the breakdown — in `howTo`.
-
-**Local.** In every search and morning run aim for `localShare` (default one third) of trends from the local market and region. Pay attention to: family humour, parents trying new things, pranks on kids and parents, recognisable local situations, local sounds and phrases, local creators picking up a foreign sound. A local trend is checked by the same rule (at least 3 creators in the local-language segment). If nothing local is good enough — say so, don't add weak items to hit the quota.
+The mandatory search route (inbox, news, the user's Saved and Pinterest, Curaeted, sources, Instagram/TikTok search with the working cycle, Google Trends, Creative Center, platforms by market, paid services): read `references/search-route.md` before every search and morning run, and give each scout its part.
 
 ## Daily quota
 The quota is per calendar day across all runs (count by `foundAt` today in the user's `timezone`): 6–10 new cards, ceiling 10; on a weak day 4–5 — don't add weak items for quantity. Local + regional — target `localShare`; if there's nothing worthy, fewer, noted in the reply:
@@ -223,37 +114,11 @@ The quota is per calendar day across all runs (count by `foundAt` today in the u
 New cards only with stage "rising" or "peak"; "declining" — max 1 per day and only if it adapts well.
 **Rechecking:** every morning — sounds and news hooks younger than 14 days with stage "rising" and "peak", no more than 15 cards, starting with the least recently checked (`checkedAt`). Other "rising" and "peak" — once a week. Update `stage`, `evidence` and `checkedAt`; write with `ifVersion`. Not counted in the new-card quota.
 
-## Slang dictionary (collection `phrases`)
-Words and phrases that everyone starts saying — for captions, on-screen text and scripts. Track them along the way in every run:
-- read captions, on-screen text and comments in TikTok and Instagram results: a word or phrase repeated by different creators is a candidate;
-- TikTok search suggestions ("what does … mean") and Google Trends for the local market (rising "what does [word] mean") — confirmation;
-- X and the market's messengers (Telegram for CIS) — where people discuss "suddenly everyone started saying…".
-Speech in videos can be transcribed with a video-watching skill; words that are only spoken count too.
-A word enters the dictionary if 3+ different creators used it in the last 2 weeks and mentions are growing. Worn-out words — skip. Target 1–3 words a week, not daily.
-Fields: `phrase`, `meaning` (what it means and how it's used), `signal` (how many creators, where seen), `howToUse` (how a brand can use it, 2–3 niches), `examples` (2–4 `{url, label}` links), `origin`, `stage`, `source`, `status` (New | In progress | Outdated), `foundAt`. Save to `phrases` by the "Saving" rules (slug without date, check that `doc_id` is free). In the morning message new words go in a separate "Slang" line.
+## Slang dictionary and sources
+Rules and fields for the `phrases` and `sources` collections: read `references/phrases-and-sources.md` when adding words or accounts.
 
-## Collection `sources`
-Fields: `handle`, `platform`, `url`, `kind` (editing breakdowns | trend round-ups | aesthetics | memes | media), `region` (International | Regional | Local), `note`, `addedAt`.
-Starts empty, except suggest @curaeted.co (Instagram, aesthetics) on first run. If you notice an account that regularly posts breakdowns or round-ups (e.g. monthly "trends of the month" for the region) — suggest adding it to `sources`; don't add it yourself.
-
-## Agent team (search and morning run)
-In "Find trends" and "Morning digest" work as a team: scouts → critic → writer. You are the lead: hand out tasks, check against the library, save. If there is no Agent tool — go through the same stages yourself, in order.
-
-**1. Scouts (in parallel, 3 agents).** Each gets its part of the "Where to search" route, dates (last 1–3 days), the library index (`title`, first link, `soundUrl`, `hook`) so as not to bring what's already saved, the settings, and the sections "What counts as a trend", "What not to add", "Default taste". They return only a candidate list: name, gist, links to originals, author, figures with source and date (video count on the sound, views), how many creators found, `origin`. They don't write to the library.
-- **Browser scout** — the only one working in the browser (there is one browser; two agents in it get in each other's way): the user's Saved and reposts (if set), the Pinterest ideas board (if set), Curaeted, Instagram and TikTok search by the working cycle, sound pages, Creative Center.
-- **News scout** — no browser: news of 24 hours, events calendar, Google Trends, X/Threads, TGStat (CIS markets), Know Your Meme, web trend round-ups.
-- **Services scout** — vidIQ, Apify (accounts from `sources`), Spyglass; within a budget of 12 calls.
-The browser scout checks all candidate links (its own and others') and returns for each a mark "opened, technique present, date". While it works, the lead doesn't use the browser. If the browser is unavailable — the browser scout isn't launched; this goes into the "unavailable" line.
-
-**2. Lead** merges candidates and removes duplicates between scouts and against the library by the duplicate rule.
-
-**3. Critic (1 agent that hasn't seen the search).** Gets the candidates and the sections "What counts as a trend", "What not to add", "Default taste", "Who the library is for", "Daily quota". For each — a verdict: "Trend" / "Find" / "Reject" and a one-line reason (e.g. "one video, no repeats", "cheesy", "doesn't transfer to 3 niches", "no original"). Rejects candidates without the browser scout's link-check mark (in a run without a browser — passes them with `verified: false`) and figures without source and date; invents nothing. Watches the quota: local share and per-type norms; doesn't pass weak items for quantity.
-
-**4. Writer (1 agent).** For approved items writes `hook`, `howToUse` (at least 3 niches, rotating) and `summary` in a "fun, not cheesy" tone.
-
-**5. Lead** saves per "Saving" and writes the reply or the morning message. At the end — a line "Team: found N, critic passed M, rejected K (main reasons)".
-
-No more than 5 agents per run: each one spends the user's limits.
+## Agent team
+Scouts → critic → writer workflow for "Find trends" and the morning digest: read `references/agent-team.md` before those modes.
 
 ## Saving
 For all modes:
