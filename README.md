@@ -17,11 +17,16 @@ Looking for layout, presets and motion? See **[by-design](https://github.com/bys
 ## Install
 
 ### Option 1 — by link (recommended)
-**Claude app (desktop / web):** **Plugins** → **Add custom plugin** (in some versions: Customize → Plugins → Add marketplace) → paste
+**Claude app (desktop / web):**
+1. Open **Customize** → **Plugins** → **Manage marketplaces** → **Add marketplace** and paste the link below.
+2. Click **Done**, find **by-content** in the plugins list and click **Install**.
+3. To get updates later: **Manage marketplaces** → **…** next to by-content → sync.
+
 ```
 https://github.com/bysaneera/by-content
 ```
-then install **by-content**. Plugins work where Claude runs tasks with tools (the desktop app's task mode and Claude Code), not in a plain chat.
+
+The marketplace is only the source — the plugin itself still needs **Install**. Plugins work where Claude runs tasks with tools (the desktop app's task mode and Claude Code), not in a plain chat.
 
 **Claude Code:**
 ```
@@ -32,7 +37,7 @@ then install **by-content**. Plugins work where Claude runs tasks with tools (th
 **Organisations:** organisation-wide sync from GitHub works only with private or internal repositories connected through the Claude GitHub App — an admin can fork this repo privately and sync that, or upload the file below.
 
 ### Option 2 — upload the file
-Download [`dist/by-content.zip`](dist/by-content.zip) (or the identical [`dist/by-content.plugin`](dist/by-content.plugin)) and upload it in Claude: Plugins → Add custom plugin → upload the file.
+Download [`dist/by-content.zip`](dist/by-content.zip) (or the identical [`dist/by-content.plugin`](dist/by-content.plugin)) and upload it in Claude: Customize → Plugins → upload a plugin file.
 
 ---
 
