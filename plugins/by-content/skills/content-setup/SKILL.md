@@ -40,7 +40,6 @@ Purpose: trend-scout reads the user's **Saved** and **reposts** to turn what the
 ## Step 5. Pinterest (optional)
 1. **Profile** — ask for the profile URL (`pinterest.com/<username>`); open it in the browser and confirm the boards list is visible (private boards need the user to be logged in). Save as `pinterestProfile`. content-ideas looks for a board named after each client project there.
 2. **Ideas board** — ask if there's a board where they save their own ideas/trend finds; save its full URL as `pinterestIdeasBoard` (short pin.it links may not open — open the link and save the full URL it resolves to).
-3. Mention the design boards convention (`preset-…`, `motion-design`) only if the design pack is installed; their setup is in design-setup.
 Read only — never pin, follow or edit.
 
 ## Step 6. Other sources (optional)
